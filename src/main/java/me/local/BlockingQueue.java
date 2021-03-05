@@ -8,7 +8,7 @@ public interface BlockingQueue<T> {
      *
      * @param o
      */
-    void add(T o);
+    void add(T o) throws InterruptedException;
 
 
     boolean offer(T o);
@@ -20,7 +20,7 @@ public interface BlockingQueue<T> {
      *
      * @return
      */
-    T take();
+    T take() throws InterruptedException;
 
     /**
      * get the element and remove it
