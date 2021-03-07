@@ -8,12 +8,12 @@ public interface BlockingQueue<T> {
      *
      * @param o
      */
-    void add(T o);
+    void add(T o) throws InterruptedException;
 
 
-    boolean offer(T o);
+    boolean offer(T o) throws InterruptedException;
 
-    boolean offer(T o, Duration timeout);
+    boolean offer(T o, Duration timeout) throws InterruptedException;
 
     /**
      * get the element until available
