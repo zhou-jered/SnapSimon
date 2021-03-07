@@ -20,7 +20,7 @@ public interface BlockingQueue<T> {
      *
      * @return
      */
-    T take();
+    T take() throws InterruptedException;
 
     /**
      * get the element and remove it
