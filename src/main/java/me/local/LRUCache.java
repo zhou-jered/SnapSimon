@@ -13,7 +13,8 @@ public class LRUCache {
             idx++;
             while (shiftIdx > 0) {
                 int parentIdx = shiftIdx / 2;
-                if (value > heap[parentIdx]) {
+                //value > heap[parentIdx]
+                if (shouldParentDown(heap[parentIdx], value)) {
                     int temp = heap[parentIdx];
                     heap[parentIdx] = value;
                     heap[shiftIdx] = temp;
@@ -61,11 +62,19 @@ public class LRUCache {
         public int size() {
             return idx;
         }
+
+        boolean shouldParentDown(int parent, int child) {
+            return parent < child;
+        }
+
+        boolean shouldFirstUp(int first, int second) {
+            return first > second;
+        }
     }
 
 
     void process() {
-        int[] nums = new int[]{10, 3, 5, 193, 198, 12, 41,-100, 2, 45, 1, -10};
+        int[] nums = new int[]{10, 3, 5, 193, 198, 12, 41, -100, 2, 45, 1, -10};
         InnerHeap heap = new InnerHeap();
         for (int n : nums) {
             heap.insert(n);
