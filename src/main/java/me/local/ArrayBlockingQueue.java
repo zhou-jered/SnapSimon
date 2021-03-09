@@ -6,24 +6,29 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ArrayBlockingQueue<T> implements BlockingQueue<T> {
 
-    private T[] elements;
+    private Object[] elements;
     private AtomicInteger head = new AtomicInteger(-1); // the position of read
     private AtomicInteger tail = new AtomicInteger(0);  // the position of write
+    private AtomicInteger size = new AtomicInteger(0);
     private int capacity = 0;
     private ReentrantLock putLock = new ReentrantLock();
     private ReentrantLock takeLock = new ReentrantLock();
 
+    public ArrayBlockingQueue(int capacity) {
+        this.capacity = capacity;
+        this.elements = new Object[capacity];
+    }
+
     @Override
     public void add(T o) throws InterruptedException {
-        putLock.lockInterruptibly();
-        if (tail.get() > head.get()) {
 
-        }
+        int idx = tail.getAndIncrement() % capacity;
+        elements[idx] = o;
     }
 
     @Override
     public boolean offer(T o) {
-        return false;
+        return offer(o, Duration.ofMillis(0));
     }
 
     @Override
@@ -41,6 +46,12 @@ public class ArrayBlockingQueue<T> implements BlockingQueue<T> {
         return null;
     }
 
+    /**
+     * get but not remove it
+     *
+     * @param timeout
+     * @return
+     */
     @Override
     public T peek(Duration timeout) {
         return null;
@@ -53,10 +64,9 @@ public class ArrayBlockingQueue<T> implements BlockingQueue<T> {
 
     @Override
     public void clear() {
-
+        head.set(-1);
+        tail.set(0);
+        size.set(0);
     }
 
-    private void ensureCapacity(int capacity) {
-        this.capacity = capacity;
-    }
 }
