@@ -74,7 +74,7 @@ public class LRUCache {
 
 
     void process() {
-        int[] nums = new int[]{10, 3, 5, 193, 198, 12, 41, -100, 2, 45, 1, -10};
+        int[] nums = new int[]{10*100, 1,1,10,10,100,3, 5, 193, 198, 12, 41, -100, 2, 45, 1, -10};
         InnerHeap heap = new InnerHeap();
         for (int n : nums) {
             heap.insert(n);
